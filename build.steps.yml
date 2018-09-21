@@ -2,4 +2,18 @@ pool:
   vmImage: 'VS2017-Win2016'
 
 steps:
-- powershell: Write-Host "Hello world"
+
+# Configure Nuget Source
+- powershell: Invoke-RestMethod "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "$env:UserProfile/nuget.exe"
+  displayName: 'Download nuget.exe into UserProfile'
+
+- script: |
+    nuget.exe sources Add -Name "azure" -Username pipeline -Password $(System.AccessToken) -StorePasswordInClearText -Source "https://pkgs.dev.azure.com/gcmlp/_packaging/default/nuget/v3/index.json"
+    nuget.exe sources Remove -Name "nuget.org"
+    nuget.exe sources Add -Name "nuget.org" -Source "https://api.nuget.org/v3/index.json"
+    nuget.exe sources
+  displayName: 'Register project feed before nuget.org feed'
+  workingDirectory: $(USERPROFILE)
+
+- script: '%USERPROFILE%\nuget.exe list -source azure -prerelease'
+  displayName: 'Show contents of nuget feed'
