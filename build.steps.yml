@@ -4,4 +4,4 @@ jobs:
     vmImage: 'VS2017-Win2016'  
   steps:
 # Configure Nuget Source
-    powershell: Write-Host "Hello Again"
+  - powershell: Write-Host "Hello Again"
