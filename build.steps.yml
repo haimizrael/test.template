@@ -1,10 +1,7 @@
 jobs: 
 - job: Build
-
   pool:
-  - vmImage: 'VS2017-Win2016'
-  
+  - vmImage: 'VS2017-Win2016'  
   - steps:
-
 # Configure Nuget Source
     powershell: Write-Host "Hello Again"
