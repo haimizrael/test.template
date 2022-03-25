@@ -1,7 +1,7 @@
 jobs: 
 - job: Build
   pool:
-    vmImage: 'VS2017-Win2016'  
+    vmImage: 'Windows-Latest'  
   steps:
   # Configure Nuget Source
   - powershell: gci c:/modules -Recurse
